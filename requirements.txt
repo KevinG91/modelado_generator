@@ -1,0 +1,4 @@
+sqlfluff>=3.0.0
+
+black>=23.0.0
+flake8>=6.0.0

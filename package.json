@@ -1,0 +1,12 @@
+{
+    "name": "modelado_generator",
+    "version": "1.0.0",
+    "description": "generates SQL files for Glue catalog and S3 populators",
+    "scripts": {
+        "prepare": "husky install .husky"
+    },
+    "devDependencies": {
+        "husky": "^8.0.3",
+        "prettier": "^3.0.0"
+    }
+}

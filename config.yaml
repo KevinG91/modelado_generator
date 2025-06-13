@@ -1,0 +1,30 @@
+# This is an example, change it so it's valid for your project
+tablas_solicitud_ingesta:
+    - OW_POWER_BI_G20_INDICADORES_MUD_CHECK
+    - OW_POWER_BI_G20_BHA_COMPONENTS
+    - OW_POWER_BI_G18_KPI_CEMENTING
+    - OW_POWER_BI_G11_POZOS_SURVEY
+    - OW_POWER_BI_G27_BIT_SUMMARY
+    - OW_CASING_COMPONENTS
+    - OW_CASING_GENERAL
+    - OW_CEMENT_GENERAL
+    - OW_CEMENT_STAGE
+    - OW_CEMENT_TEST
+    # - OW_LOGGING_INTERVALS
+    - OW_POWER_BI_G11_OPER_PERFIL_OH
+    - OW_POWER_BI_G11_LOGGING_LAS_FILES
+
+replacements:
+    ow_g20_ind_mud_check: OW_POWER_BI_G20_INDICADORES_MUD_CHECK
+    ow_g20_bha_componentes: OW_POWER_BI_G20_BHA_COMPONENTS
+    ow_g18_kpi_cementing: OW_POWER_BI_G18_KPI_CEMENTING
+    ow_g11_pozos_survey: OW_POWER_BI_G11_POZOS_SURVEY
+    ow_g27_bit_summary: OW_POWER_BI_G27_BIT_SUMMARY
+    ow_casing_components: OW_CASING_COMPONENTS
+    ow_casing_general: OW_CASING_GENERAL
+    ow_cement_general: OW_CEMENT_GENERAL
+    ow_cement_stage: OW_CEMENT_STAGE
+    ow_cement_test: OW_CEMENT_TEST
+    # : OW_LOGGING_INTERVALS
+    ow_g11_oper_perfil_oh: OW_POWER_BI_G11_OPER_PERFIL_OH
+    ow_g11_log_las_files: OW_POWER_BI_G11_LOGGING_LAS_FILES
