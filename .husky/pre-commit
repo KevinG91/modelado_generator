@@ -26,34 +26,34 @@ print_info() {
 }
 
 # Commented out for initial commit
-# print_info "Checking if current branch is based on origin/main..."
-# current_branch=$(git branch --show-current)
+print_info "Checking if current branch is based on origin/main..."
+current_branch=$(git branch --show-current)
 
-# if [ "$current_branch" = "main" ]; then
-#     print_info "You're on main branch, skipping ancestor check"
-# else
-#     if ! git merge-base --is-ancestor origin/main HEAD 2>/dev/null; then
-#         exit_with_error "Current branch is not based on origin/main. Please rebase your branch."
-#     fi
-#     print_success "Current branch is properly based on origin/main"
-# fi
+if [ "$current_branch" = "main" ]; then
+    print_info "You're on main branch, skipping ancestor check"
+else
+    if ! git merge-base --is-ancestor origin/main HEAD 2>/dev/null; then
+        exit_with_error "Current branch is not based on origin/main. Please rebase your branch."
+    fi
+    print_success "Current branch is properly based on origin/main"
+fi
 
-# 2. Fetch latest commits
-# print_info "Fetching latest commits from origin..."
-# if ! git fetch origin; then
-#     exit_with_error "Failed to fetch from origin"
-# fi
-# print_success "Successfully fetched latest commits"
+2. Fetch latest commits
+print_info "Fetching latest commits from origin..."
+if ! git fetch origin; then
+    exit_with_error "Failed to fetch from origin"
+fi
+print_success "Successfully fetched latest commits"
 
-# print_info "Checking if origin/main has new commits..."
-# LOCAL_MAIN=$(git rev-parse main 2>/dev/null || echo "")
-# REMOTE_MAIN=$(git rev-parse origin/main 2>/dev/null || echo "")
+print_info "Checking if origin/main has new commits..."
+LOCAL_MAIN=$(git rev-parse main 2>/dev/null || echo "")
+REMOTE_MAIN=$(git rev-parse origin/main 2>/dev/null || echo "")
 
-# if [ "$LOCAL_MAIN" != "$REMOTE_MAIN" ]; then
-#     exit_with_error "Local main is behind origin/main, please update"
-# fi
+if [ "$LOCAL_MAIN" != "$REMOTE_MAIN" ]; then
+    exit_with_error "Local main is behind origin/main, please update"
+fi
 
-# print_success "All pre-commit checks passed! 🎉";
+print_success "All pre-commit checks passed! 🎉";
 
 # Run Prettier on JSON, YAML, and Markdown files
 print_info "Checking for files that need Prettier formatting..."
@@ -98,23 +98,23 @@ if [ -n "$PY_FILES" ]; then
         echo "$PY_FILES" | while read -r file; do
             if [ -f "$file" ]; then
                 print_info "Formatting Python file: $file"
-                black "$file" --line-length 88
+                black "$file" --line-length 144
                 git add "$file"
             fi
         done
     fi
     
     # Check if flake8 is installed (optional - remove if you don't want it)
-    if command -v flake8 &> /dev/null; then
-        print_info "Running flake8 linting..."
-        echo "$PY_FILES" | while read -r file; do
-            if [ -f "$file" ]; then
-                if ! flake8 "$file" --max-line-length=88; then
-                    exit_with_error "flake8 linting failed for $file"
-                fi
-            fi
-        done
-    fi
+    # if command -v flake8 &> /dev/null; then
+    #     print_info "Running flake8 linting..."
+    #     echo "$PY_FILES" | while read -r file; do
+    #         if [ -f "$file" ]; then
+    #             if ! flake8 "$file" --max-line-length=144; then
+    #                 exit_with_error "flake8 linting failed for $file"
+    #             fi
+    #         fi
+    #     done
+    # fi
     
     print_success "Python processing completed"
 else

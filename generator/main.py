@@ -11,9 +11,7 @@ import yaml
 from utils import normalizer, sorter
 
 # Configure logging
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
 # Get the directory where this script is located
@@ -24,9 +22,7 @@ PARENT_DIR = os.path.dirname(SCRIPT_DIR)
 
 def parse_args():
     """Parse command line arguments."""
-    parser = argparse.ArgumentParser(
-        description="Generate SQL files for Glue catalog and S3 populators"
-    )
+    parser = argparse.ArgumentParser(description="Generate SQL files for Glue catalog and S3 populators")
     # Change default for the name of YOUR document
     parser.add_argument(
         "--excel-file",
@@ -68,9 +64,9 @@ def generate_glue_catalog_populators(
     try:
         # Fixed audit fields (you can tweak the types if needed)
         audit_fields = [
-            "fecha_audit_create TIMESTAMP",
-            "proceso_audit_create STRING",
-            "fecha_audit_update TIMESTAMP",
+            "fecha_audit_create TIMESTAMP,",
+            "proceso_audit_create STRING,",
+            "fecha_audit_update TIMESTAMP,",
             "proceso_audit_update STRING",
         ]
 
@@ -85,9 +81,7 @@ def generate_glue_catalog_populators(
 
         # Get lakehouse table name
         lakehouse_naming = (
-            lakehouse_table_names.loc[
-                lakehouse_table_names["Nombre en Origen"] == replace[schema]
-            ]["Nombre Interface en Lakehouse"].values[0]
+            lakehouse_table_names.loc[lakehouse_table_names["Nombre en Origen"] == replace[schema]]["Nombre Interface en Lakehouse"].values[0]
             + "_th"
         )
 
@@ -141,9 +135,7 @@ def generate_s3_populator(
 
         # Get lakehouse table name
         lakehouse_naming = (
-            lakehouse_table_names.loc[
-                lakehouse_table_names["Nombre en Origen"] == replace[schema]
-            ]["Nombre Interface en Lakehouse"].values[0]
+            lakehouse_table_names.loc[lakehouse_table_names["Nombre en Origen"] == replace[schema]]["Nombre Interface en Lakehouse"].values[0]
             + "_th"
         )
 
@@ -227,18 +219,12 @@ def main():
 
         # Load Excel data
         logger.info(f"Loading data from {config['excel_file']}")
-        ingesta_detalle_campos = pd.read_excel(
-            config["excel_file"], sheet_name="Campos Lakehouse", skiprows=2
-        )
-        ingesta_tablas_lakehouse = pd.read_excel(
-            config["excel_file"], sheet_name="Tablas Lakehouse", skiprows=2
-        )
+        ingesta_detalle_campos = pd.read_excel(config["excel_file"], sheet_name="Campos Lakehouse", skiprows=2)
+        ingesta_tablas_lakehouse = pd.read_excel(config["excel_file"], sheet_name="Tablas Lakehouse", skiprows=2)
 
         # Get schema list
         schemas = [
-            os.path.splitext(f)[0]
-            for f in os.listdir(config["schemas_path"])
-            if os.path.isfile(os.path.join(config["schemas_path"], f))
+            os.path.splitext(f)[0] for f in os.listdir(config["schemas_path"]) if os.path.isfile(os.path.join(config["schemas_path"], f))
         ]
         logger.info(f"Found {len(schemas)} schemas to process")
 
@@ -248,18 +234,15 @@ def main():
 
             # Skip schemas not in replacements
             if current_schema not in config["replacements"]:
-                logger.warning(
-                    f"Schema {current_schema} not found in replacements, skipping"
-                )
+                logger.warning(f"Schema {current_schema} not found in replacements, skipping")
                 continue
 
             # Get aliases for current schema
             try:
                 aliases = list(
-                    ingesta_detalle_campos[
-                        ingesta_detalle_campos["Nombre Interface en Origen"]
-                        == config["replacements"][current_schema]
-                    ]["Campo (Nombre Lakehouse)"]
+                    ingesta_detalle_campos[ingesta_detalle_campos["Nombre Interface en Origen"] == config["replacements"][current_schema]][
+                        "Campo (Nombre Lakehouse)"
+                    ]
                 )
             except Exception as e:
                 logger.error(f"Error getting aliases for {current_schema}: {str(e)}")
@@ -267,18 +250,14 @@ def main():
 
             # Load schema data
             try:
-                origin_fields, field_types = load_schema_data(
-                    config["schemas_path"], current_schema
-                )
+                origin_fields, field_types = load_schema_data(config["schemas_path"], current_schema)
             except Exception as e:
                 logger.error(f"Skipping schema {current_schema} due to error: {str(e)}")
                 continue
 
             # Process fields
             normalized_origin_fields = [normalizer(f) for f in origin_fields]
-            aligned_aliases = sorter(
-                origin=origin_fields, normalized=normalized_origin_fields, alias=aliases
-            )
+            aligned_aliases = sorter(origin=origin_fields, normalized=normalized_origin_fields, alias=aliases)
 
             # Generate output files
             generate_glue_catalog_populators(
