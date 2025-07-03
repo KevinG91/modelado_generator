@@ -2,6 +2,12 @@
 __pycache__
 *.pyc
 
+# Excel
+*.xlsx
+
+# out
+/outputs
+
 # Logs
 logs
 *.log

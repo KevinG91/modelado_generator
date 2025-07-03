@@ -10,7 +10,7 @@ tablas_solicitud_ingesta:
     - OW_CEMENT_GENERAL
     - OW_CEMENT_STAGE
     - OW_CEMENT_TEST
-    # - OW_LOGGING_INTERVALS
+    - OW_LOGGING_INTERVALS
     - OW_POWER_BI_G11_OPER_PERFIL_OH
     - OW_POWER_BI_G11_LOGGING_LAS_FILES
 
@@ -25,6 +25,6 @@ replacements:
     ow_cement_general: OW_CEMENT_GENERAL
     ow_cement_stage: OW_CEMENT_STAGE
     ow_cement_test: OW_CEMENT_TEST
-    # : OW_LOGGING_INTERVALS
+    ow_log_intervals: OW_LOGGING_INTERVALS
     ow_g11_oper_perfil_oh: OW_POWER_BI_G11_OPER_PERFIL_OH
     ow_g11_log_las_files: OW_POWER_BI_G11_LOGGING_LAS_FILES
