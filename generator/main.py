@@ -11,7 +11,7 @@ import yaml
 from utils import normalizer, sorter
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
 logger = logging.getLogger(__name__)
 
 # Get the directory where this script is located
@@ -261,7 +261,7 @@ def main():
 
             # Generate output files
             generate_glue_catalog_populators(
-                origin=origin_fields,
+                origin=aligned_aliases,
                 field=field_types,
                 schema=current_schema,
                 lakehouse_table_names=ingesta_tablas_lakehouse,

@@ -38,7 +38,7 @@ else
     print_success "Current branch is properly based on origin/main"
 fi
 
-2. Fetch latest commits
+# 2. Fetch latest commits
 print_info "Fetching latest commits from origin..."
 if ! git fetch origin; then
     exit_with_error "Failed to fetch from origin"

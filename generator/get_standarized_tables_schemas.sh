@@ -14,6 +14,7 @@ tables=(
   "ow_cement_test"
   "ow_g11_oper_perfil_oh"
   "ow_g11_log_las_files"
+  "ow_log_intervals"
 )
 
 database="pae_dataplatform_standarized"
